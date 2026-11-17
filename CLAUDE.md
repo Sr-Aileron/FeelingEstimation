@@ -8,6 +8,10 @@ OLED（SSD1306）に感情名・曲番号・心拍数を表示する。
 
 - `src/main/` — 本体スケッチ（判定・再生・表示）
 - `src/{i2c_scanner,oled,beat_sensor,acceleration_sensor,dfplayer}/` — 部品ごとの動作確認用スケッチ（組み立て順）
+- `src/logger/` — 記録用スケッチ。心拍センサーの生データ（約100Hz）と加速度・角速度を CSV 出力（±8g / ±500°/s）
+- `tools/log_summary.py` — 記録 CSV の要約（標準ライブラリのみ）
+- `data/recordings/` — 記録データ `<LABEL>-<日時>.csv`（git 管理。閾値の根拠）
+- `doc/recording.md` — 記録の手順と状況ラベル（calm / tense / restless / groove / active / cooldown）
 - `doc/hardware.pdf` — 配線ガイド ver1（部品表・配線・トラブルシューティング）
 - `doc/software.pdf` — ソフトウェアガイド ver2（仕様・各スケッチの全文・調整方法）
 
@@ -22,6 +26,8 @@ make compile SKETCH=main     # ビルド（既定 SKETCH=main）
 make compile-all             # 全スケッチ
 make upload SKETCH=main      # 書き込み（実機が必要。勝手に実行しない）
 make capture DURATION=30     # シリアル出力を logs/ に保存（実機が必要）
+make record LABEL=calm       # logger の CSV を data/recordings/ に記録（実機 + logger 書き込み済みが必要）
+make summary                 # 記録 CSV の要約
 make ports                   # 接続ボード一覧
 make setup                   # コア・ライブラリを固定バージョンで導入
 ```
@@ -56,6 +62,17 @@ arduino-cli は PATH に無ければ Arduino IDE 同梱版を使う。
 - 曲数は起動時に `readFileCountsInFolder()` で取得。全フォルダ空なら `No songs on SD` で停止
 - `readHeart()` と `checkPlayer()` は loop 毎回呼ぶ。`delay()` を main の loop に入れない
 - 調整値は `main.ino` 冒頭の「調整用の設定値」に集約する
+
+## 次の仕様（決定済み・未実装）
+
+- 装着: 本体は腕、加速度センサーは手首、心拍センサーは指の腹に固定（MAX30102 は緑色LEDが無く手首では測れない）
+- 感情は5種類に変更する:
+  - Calm: 静止、心拍は安静時並み
+  - Tense: 動いていないのに心拍が安静時より高い（運動直後の高心拍は除く）
+  - Restless: 小さく不規則な動きが多い
+  - Groove: 0.5〜3Hz のリズミカルな腕の動き
+  - Active: 大きな動きがあり、それに見合って心拍も上がっている
+- 閾値は `data/recordings/` の実測から決める。腕の動きでは ±2g が振り切れるので main も ±8g にする予定
 
 ## 規約
 

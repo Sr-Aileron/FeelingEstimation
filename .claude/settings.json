@@ -6,7 +6,10 @@
       "Bash(make ports:*)",
       "Bash(make list:*)",
       "Bash(make clean:*)",
-      "Bash(make capture:*)"
+      "Bash(make capture:*)",
+      "Bash(make record:*)",
+      "Bash(make summary:*)",
+      "Bash(python3 tools/log_summary.py:*)"
     ],
     "ask": [
       "Bash(make upload:*)",
