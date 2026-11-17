@@ -12,6 +12,7 @@ OLED（SSD1306）に感情名・曲番号・心拍数を表示する。
 - `tools/log_summary.py` — 記録 CSV の要約（標準ライブラリのみ）
 - `data/recordings/` — 記録データ `<LABEL>-<日時>.csv`（git 管理。閾値の根拠）
 - `doc/recording.md` — 記録の手順と状況ラベル（calm / tense / restless / groove / active / cooldown）
+- `doc/display-ideas.md` — OLED 表示機能の構想（感情キャラ・呼吸ガイド・鼓動・気分グラフ、LED・ボタンの活用と空きピン。未実装）
 - `doc/hardware.pdf` — 配線ガイド ver1（部品表・配線・トラブルシューティング）
 - `doc/software.pdf` — ソフトウェアガイド ver2（仕様・各スケッチの全文・調整方法）
 
