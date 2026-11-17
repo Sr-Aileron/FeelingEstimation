@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(make compile:*)",
+      "Bash(make compile-all:*)",
+      "Bash(make ports:*)",
+      "Bash(make list:*)",
+      "Bash(make clean:*)",
+      "Bash(make capture:*)"
+    ],
+    "ask": [
+      "Bash(make upload:*)",
+      "Bash(make setup:*)"
+    ]
+  }
+}

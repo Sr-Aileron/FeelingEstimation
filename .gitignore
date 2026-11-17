@@ -1,4 +1,6 @@
 *.hex
 *.elf
 build/
+logs/
 .DS_Store
+.claude/settings.local.json
